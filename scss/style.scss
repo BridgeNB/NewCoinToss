@@ -1,0 +1,15 @@
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+  font-size: 45px;
+  font-weight: 600;
+  white-space: pre;
+  .repeat-input {
+    width: 250px;
+  }
+}

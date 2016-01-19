@@ -1,0 +1,82 @@
+var inputing = false;
+var results = [];
+var n;
+var min = 4;
+var max = 1000;
+
+const show_1 = () => {
+  $('.content').text('Tossing Coin');
+  var time = 3000 + Math.random()*(max - min) + min;
+  results.push(time + ' ');
+  setTimeout(show_2, time);
+}
+
+const show_2 = () => {
+  $('.content').text('Showing Outcome to the Reporter');
+  var time = 5000 + Math.random()*(max - min) + min;
+  results.push(time + ' ')
+  setTimeout(show_3, time);
+}
+
+const show_3 = () => {
+  $('.content').text('The Reporter Says ....');
+  setTimeout(show_4, 1000);
+}
+
+const show_4 = () => {
+  $('.content').text('');
+  setTimeout(show_5, 500);
+}
+
+const show_5 = () => {
+  $('.content').text(Math.random()*100 > 50 ? 'HEADS' : 'TAILS');
+  setTimeout(show_6, 500);
+}
+
+const show_6 = () => {
+  $('.content').text('   Your Guess?\n\nHEADS or TAILS');
+  setTimeout(show_7, 500);
+}
+
+const show_7 = () => {
+  $('.content').text('HEADS <-                -> TAILS');
+  inputing = true;
+}
+
+$(document).keydown(e => {
+  if (!inputing) {
+    return;
+  }
+  inputing = false;
+  switch(e.which) {
+    case 37: // left
+      results.push('HEADS');
+      break;
+
+    case 39: // right
+      results.push('TAILS');
+      break;
+
+    default: return;
+  }
+  e.preventDefault();
+  n--;
+  if (n > 0) {
+    show_1();
+  } else {
+    save_result();
+  }
+});
+
+$('#start').click(() => {
+  n = $('.repeat-input').val();
+  show_1();
+});
+
+const save_result = () => {
+  var textToWrite = results.join('\n');
+	var blob = new Blob([textToWrite], {type:'text/plain'});
+  saveAs(blob, "results.txt");
+};
+
+
